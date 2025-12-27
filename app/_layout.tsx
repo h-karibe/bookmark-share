@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -11,7 +12,7 @@ export default function RootLayout() {
   const [permission, requestPermission] = useCameraPermissions();
 
   useEffect(() => {
-    if (permission && !permission.granted && permission.canAskAgain) {
+    if (Platform.OS !== 'web' && permission && !permission.granted && permission.canAskAgain) {
       requestPermission();
     }
   }, [permission]);

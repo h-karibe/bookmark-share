@@ -10,6 +10,7 @@ import {
   FlatList,
   Image,
   Modal,
+  Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Camera, Search as SearchIcon, HelpCircle } from 'lucide-react-native';
@@ -142,12 +143,14 @@ export default function SearchScreen() {
           <HelpCircle size={24} color="#6b7280" />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.scanButton}
-          onPress={() => setScannerVisible(true)}
-        >
-          <Camera size={24} color="#2563eb" />
-        </TouchableOpacity>
+        {Platform.OS !== 'web' && (
+          <TouchableOpacity
+            style={styles.scanButton}
+            onPress={() => setScannerVisible(true)}
+          >
+            <Camera size={24} color="#2563eb" />
+          </TouchableOpacity>
+        )}
       </View>
 
       {loading ? (
