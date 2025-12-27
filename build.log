@@ -1,0 +1,15 @@
+
+> bolt-expo-starter@1.0.0 build:web
+> expo export --platform web
+
+env: load .env
+env: export EXPO_PUBLIC_SUPABASE_ANON_KEY EXPO_PUBLIC_SUPABASE_URL EXPO_PUBLIC_AMAZON_ASSOCIATE_ID
+Starting Metro Bundler
+Web node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 98.6% (2862/2882)
+Web Bundled 2295ms node_modules/expo-router/entry.js (2971 modules)
+Error: Could not find MIME for Buffer <null>
+Error: Could not find MIME for Buffer <null>
+    at Jimp.parseBitmap (/tmp/cc-agent/61316011/project/node_modules/jimp-compact/dist/jimp.js:1:125518)
+    at Jimp.parseBitmap (/tmp/cc-agent/61316011/project/node_modules/jimp-compact/dist/jimp.js:1:8514)
+    at /tmp/cc-agent/61316011/project/node_modules/jimp-compact/dist/jimp.js:1:7613
+    at FSReqCallback.readFileAfterClose [as oncomplete] (node:internal/fs/read/context:68:3)
