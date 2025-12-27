@@ -1,7 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from 'react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'expo-router';
 import { ChevronRight, User, LogOut } from 'lucide-react-native';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 export default function SettingsScreen() {
   const { user, signOut } = useAuth();
@@ -17,9 +18,10 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.content}>
-        <Text style={styles.pageTitle}>設定</Text>
+    <ResponsiveContainer title="設定">
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+          {Platform.OS !== 'web' && <Text style={styles.pageTitle}>設定</Text>}
 
         {user && (
           <View style={styles.section}>
@@ -64,8 +66,9 @@ export default function SettingsScreen() {
             </View>
           </View>
         )}
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
+    </ResponsiveContainer>
   );
 }
 

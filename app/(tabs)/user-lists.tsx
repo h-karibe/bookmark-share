@@ -3,11 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, BookOpen } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
@@ -96,45 +96,47 @@ export default function UserListsScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack}>
-            <ArrowLeft size={24} color="#1f2937" />
-          </TouchableOpacity>
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleBack}>
+              <ArrowLeft size={24} color="#1f2937" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#2563eb" />
+          </View>
         </View>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
-        </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
-  if (error) {
+  if (error && !lists.length) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack}>
-            <ArrowLeft size={24} color="#1f2937" />
-          </TouchableOpacity>
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleBack}>
+              <ArrowLeft size={24} color="#1f2937" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
         </View>
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{error}</Text>
-        </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
-          <ArrowLeft size={24} color="#1f2937" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          {username || 'ユーザー'}のリスト
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+    <ResponsiveContainer>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleBack}>
+            <ArrowLeft size={24} color="#1f2937" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>{username}のリスト</Text>
+        </View>
 
       {lists.length === 0 ? (
         <View style={styles.emptyContainer}>
@@ -162,7 +164,8 @@ export default function UserListsScreen() {
           contentContainerStyle={styles.listContainer}
         />
       )}
-    </SafeAreaView>
+      </View>
+    </ResponsiveContainer>
   );
 }
 

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
@@ -122,11 +121,11 @@ export default function SearchScreen() {
   };
 
   return (
-    <ResponsiveContainer>
+    <ResponsiveContainer title="本を見つける">
       <View style={styles.container}>
         <View style={styles.searchContainer}>
-        <View style={styles.searchBox}>
-          <SearchIcon size={20} color="#6b7280" />
+          <View style={styles.searchBar}>
+            <SearchIcon size={20} color="#6b7280" style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             value={searchQuery}
@@ -213,13 +212,15 @@ export default function SearchScreen() {
         </View>
       )}
 
-      <BarcodeScannerModal
+      {Platform.OS !== 'web' && (
+        <BarcodeScannerModal
           visible={scannerVisible}
           onClose={() => setScannerVisible(false)}
           onBarcodeScanned={handleBarcodeScanned}
         />
+      )}
 
-        <SearchHelpModal
+      <SearchHelpModal
           visible={helpModalVisible}
           onClose={() => setHelpModalVisible(false)}
         />
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
   },
-  searchBox: {
+  searchBar: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -260,6 +261,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     gap: 8,
   },
+  searchIcon: {},
   searchInput: {
     flex: 1,
     fontSize: 16,

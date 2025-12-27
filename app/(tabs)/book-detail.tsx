@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
@@ -19,6 +18,7 @@ import BookmarkModal from '@/components/BookmarkModal';
 import BookReviews from '@/components/BookReviews';
 import { ShareMenu } from '@/components/ShareMenu';
 import { getBookShareableUrl } from '@/lib/share';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 interface BookData {
   isbn: string;
@@ -273,44 +273,49 @@ export default function BookDetailScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#2563eb" />
+          </View>
         </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
   if (error || !book) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack}>
-            <ArrowLeft size={24} color="#1f2937" />
-          </TouchableOpacity>
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleBack}>
+              <ArrowLeft size={24} color="#1f2937" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error || '書籍が見つかりません'}</Text>
+            <TouchableOpacity
+              style={styles.retryButton}
+              onPress={() => {
+                setError(null);
+                fetchBook();
+              }}
+            >
+              <Text style={styles.retryButtonText}>もう一度試す</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{error || '書籍が見つかりません'}</Text>
-          <TouchableOpacity
-            style={styles.retryButton}
-            onPress={() => {
-              setError(null);
-              fetchBook();
-            }}
-          >
-            <Text style={styles.retryButtonText}>もう一度試す</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
-          <ArrowLeft size={24} color="#1f2937" />
-        </TouchableOpacity>
+    <ResponsiveContainer>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleBack}>
+            <ArrowLeft size={24} color="#1f2937" />
+          </TouchableOpacity>
         <View style={styles.headerActions}>
           <ShareMenu
             shareData={{
@@ -435,7 +440,8 @@ export default function BookDetailScreen() {
           onSave={handleSaveBookmark}
         />
       )}
-    </SafeAreaView>
+      </View>
+    </ResponsiveContainer>
   );
 }
 

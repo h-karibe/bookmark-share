@@ -1,4 +1,5 @@
 import { Tabs, useSegments } from 'expo-router';
+import { Platform } from 'react-native';
 import { Search, Users, BookOpen, Settings } from 'lucide-react-native';
 import { AuthButton } from '@/components/AuthButton';
 
@@ -9,8 +10,9 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: true,
-        headerRight: () => (isLoginPage ? null : <AuthButton />),
+        headerShown: Platform.OS !== 'web',
+        headerRight: () => 
+          (isLoginPage || Platform.OS === 'web') ? null : <AuthButton />,
         headerStyle: {
           backgroundColor: '#ffffff',
         },

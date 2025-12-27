@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
@@ -16,6 +15,7 @@ import { supabase } from '@/lib/supabase';
 import { generateAmazonLink } from '@/lib/amazon';
 import { ShareMenu } from '@/components/ShareMenu';
 import { getShareableUrl } from '@/lib/share';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 interface BookmarkItem {
   id: string;
@@ -130,40 +130,45 @@ export default function PublicListDetailScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#2563eb" />
+          </View>
         </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
   if (error || !listInfo) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack}>
-            <ArrowLeft size={24} color="#1f2937" />
-          </TouchableOpacity>
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleBack}>
+              <ArrowLeft size={24} color="#1f2937" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error || 'リストが見つかりません'}</Text>
+          </View>
         </View>
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{error || 'リストが見つかりません'}</Text>
-        </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
-          <ArrowLeft size={24} color="#1f2937" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          {listInfo.name}
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+    <ResponsiveContainer>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleBack}>
+            <ArrowLeft size={24} color="#1f2937" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle} numberOfLines={1}>
+            {listInfo.name}
+          </Text>
+          <View style={styles.headerSpacer} />
+        </View>
 
       <View style={styles.infoSection}>
         <TouchableOpacity style={styles.userSection} onPress={handleUserPress}>
@@ -229,7 +234,8 @@ export default function PublicListDetailScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </SafeAreaView>
+      </View>
+    </ResponsiveContainer>
   );
 }
 

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
@@ -16,6 +15,7 @@ import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { ShareMenu } from '@/components/ShareMenu';
 import { getShareableUrl } from '@/lib/share';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 interface BookmarkItem {
   id: string;
@@ -146,43 +146,48 @@ export default function ListDetailScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#2563eb" />
+          </View>
         </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
   if (error || !listInfo) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack}>
-            <ArrowLeft size={24} color="#1f2937" />
-          </TouchableOpacity>
-        </View>
-        <ScrollView style={styles.errorScrollContainer}>
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorTitle}>エラーが発生しました</Text>
-            <Text style={styles.errorText}>{error || 'リストが見つかりません'}</Text>
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleBack}>
+              <ArrowLeft size={24} color="#1f2937" />
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+          <ScrollView style={styles.errorScrollContainer}>
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorTitle}>エラーが発生しました</Text>
+              <Text style={styles.errorText}>{error || 'リストが見つかりません'}</Text>
+            </View>
+          </ScrollView>
+        </View>
+      </ResponsiveContainer>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
-          <ArrowLeft size={24} color="#1f2937" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          ブックマーク一覧
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+    <ResponsiveContainer>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleBack}>
+            <ArrowLeft size={24} color="#1f2937" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle} numberOfLines={1}>
+            ブックマーク一覧
+          </Text>
+          <View style={styles.headerSpacer} />
+        </View>
 
       <View style={styles.listInfoSection}>
         <View style={styles.listTitleRow}>
@@ -278,7 +283,8 @@ export default function ListDetailScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </SafeAreaView>
+      </View>
+    </ResponsiveContainer>
   );
 }
 

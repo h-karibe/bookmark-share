@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
@@ -180,9 +179,9 @@ export default function BookmarksScreen() {
     router.push(`/list-detail?listId=${encodeURIComponent(listId)}&from=bookmarks`);
   };
 
-  if (authLoading) {
+  if (loading && lists.length === 0) {
     return (
-      <ResponsiveContainer>
+      <ResponsiveContainer title="マイブックマーク">
         <View style={styles.container}>
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#2563eb" />
@@ -198,7 +197,7 @@ export default function BookmarksScreen() {
 
   if (error && !lists.length) {
     return (
-      <ResponsiveContainer>
+      <ResponsiveContainer title="マイブックマーク">
         <View style={styles.container}>
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{error}</Text>
@@ -216,10 +215,10 @@ export default function BookmarksScreen() {
   });
 
   return (
-    <ResponsiveContainer>
+    <ResponsiveContainer title="マイブックマーク">
       <View style={styles.container}>
-        <View style={styles.topBar}>
-        <TouchableOpacity
+        <View style={styles.filterContainer}>
+          <TouchableOpacity
           style={styles.addButton}
           onPress={() => setNewListModalVisible(true)}
         >

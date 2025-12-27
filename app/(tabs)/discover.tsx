@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
@@ -12,6 +11,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { Globe, Heart, BookOpen, User } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 interface PublicList {
   id: string;
@@ -149,29 +149,34 @@ export default function DiscoverScreen() {
     router.push(`/user-lists?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username)}`);
   };
 
-  if (loading) {
+  if (loading && !refreshing && lists.length === 0) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
+      <ResponsiveContainer title="みんなのブックマーク">
+        <View style={styles.container}>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#2563eb" />
+          </View>
         </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
-  if (error && !lists.length) {
+  if (error && lists.length === 0) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{error}</Text>
+      <ResponsiveContainer title="みんなのブックマーク">
+        <View style={styles.container}>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
         </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      {lists.length === 0 ? (
+    <ResponsiveContainer title="みんなのブックマーク">
+      <View style={styles.container}>
+        {lists.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Globe size={64} color="#d1d5db" style={{ marginBottom: 16 }} />
           <Text style={styles.emptyTitle}>公開リストがありません</Text>
@@ -244,7 +249,8 @@ export default function DiscoverScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </SafeAreaView>
+      </View>
+    </ResponsiveContainer>
   );
 }
 

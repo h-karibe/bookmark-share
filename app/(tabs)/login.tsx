@@ -1,18 +1,21 @@
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import LoginForm from '@/components/LoginForm';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 export default function LoginScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <ScrollView contentContainerStyle={styles.content}>
-          <LoginForm />
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <ResponsiveContainer>
+      <View style={styles.container}>
+        <KeyboardAvoidingView
+          style={styles.keyboardView}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <ScrollView contentContainerStyle={styles.content}>
+            <LoginForm />
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
+    </ResponsiveContainer>
   );
 }
 

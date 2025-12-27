@@ -1,16 +1,19 @@
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import LoginForm from '@/components/LoginForm';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 export default function LoginScreen() {
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView contentContainerStyle={styles.content}>
-        <LoginForm />
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <ResponsiveContainer>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView contentContainerStyle={styles.content}>
+          <LoginForm />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </ResponsiveContainer>
   );
 }
 
