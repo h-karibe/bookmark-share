@@ -17,6 +17,7 @@ import { Camera, Search as SearchIcon, HelpCircle } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import BarcodeScannerModal from '@/components/BarcodeScannerModal';
 import SearchHelpModal from '@/components/SearchHelpModal';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 interface Book {
   id: string;
@@ -121,8 +122,9 @@ export default function SearchScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
+    <ResponsiveContainer>
+      <View style={styles.container}>
+        <View style={styles.searchContainer}>
         <View style={styles.searchBox}>
           <SearchIcon size={20} color="#6b7280" />
           <TextInput
@@ -212,16 +214,17 @@ export default function SearchScreen() {
       )}
 
       <BarcodeScannerModal
-        visible={scannerVisible}
-        onClose={() => setScannerVisible(false)}
-        onBarcodeScanned={handleBarcodeScanned}
-      />
+          visible={scannerVisible}
+          onClose={() => setScannerVisible(false)}
+          onBarcodeScanned={handleBarcodeScanned}
+        />
 
-      <SearchHelpModal
-        visible={helpModalVisible}
-        onClose={() => setHelpModalVisible(false)}
-      />
-    </SafeAreaView>
+        <SearchHelpModal
+          visible={helpModalVisible}
+          onClose={() => setHelpModalVisible(false)}
+        />
+      </View>
+    </ResponsiveContainer>
   );
 }
 

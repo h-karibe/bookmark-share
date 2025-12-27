@@ -19,6 +19,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { Plus, Lock, Globe, Trash2, X } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
+import { ResponsiveContainer } from '@/components/ResponsiveContainer';
 
 interface BookmarkList {
   id: string;
@@ -181,11 +182,13 @@ export default function BookmarksScreen() {
 
   if (authLoading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#2563eb" />
+          </View>
         </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
@@ -195,11 +198,13 @@ export default function BookmarksScreen() {
 
   if (error && !lists.length) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{error}</Text>
+      <ResponsiveContainer>
+        <View style={styles.container}>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
         </View>
-      </SafeAreaView>
+      </ResponsiveContainer>
     );
   }
 
@@ -211,8 +216,9 @@ export default function BookmarksScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.topBar}>
+    <ResponsiveContainer>
+      <View style={styles.container}>
+        <View style={styles.topBar}>
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => setNewListModalVisible(true)}
@@ -445,7 +451,8 @@ export default function BookmarksScreen() {
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </Modal>
-    </SafeAreaView>
+    </View>
+    </ResponsiveContainer>
   );
 }
 
